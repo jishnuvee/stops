@@ -3,7 +3,6 @@ title: "Stops"
 format: html
 author : "Jishnu Veerapaneni"
 
-
 execute:
     echo: false
 ---
@@ -11,12 +10,21 @@ execute:
 
 ```{r}
 #| message: false
+#| warning: false
 library(tidyverse)
 library(primer.data) 
+library(tidymodels)
+library(broom)
 ```
 
-We examine traffic stops across the United States and how race may vary in the arrest rate to improve police accountability and transparency. Using data from the Open Policing Project by Standford University, we attempt to see what the difference in arrest rate between Black and White drivers are while adjusting for other covariates.
+We examine traffic stops across the United States and how race may vary in the arrest rate to improve police accountability and transparency. Using data from the Open Policing Project by Standford University, we attempt to see what the difference in arrest rate between Black and White drivers are while adjusting for other covariates. A potential weakness in our model is that the dataset removed almost 3.1 million entries from the real data, reducing it to only about 400,000 entries, this deletion of the entries may lead to a misrepresentation of the population, as the possibility exists that the remaining/current data is only from select areas with selected and specific conditions present, and could be from biased officers who are more likely to arrest drivers compared to other officers in the zone. 
 
+
+This is my data generating mechanism : 
+
+$$
+P(Y = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_n X_n)}}
+$$
 
 
 
