@@ -1,0 +1,23 @@
+---
+title: "Stops"
+format: html
+author : "Jishnu Veerapaneni"
+
+
+execute:
+    echo: false
+---
+
+
+```{r}
+#| message: false
+library(tidyverse)
+library(primer.data) 
+```
+
+We examine traffic stops across the United States and how race may vary in the arrest rate to improve police accountability and transparency. Using data from the Open Policing Project by Standford University, we attempt to see what the difference in arrest rate between Black and White drivers are while adjusting for other covariates.
+
+
+
+
+
