@@ -99,11 +99,671 @@ window.Quarto = {
 </header>
 
 
-<p>We examine traffic stops across the United States and how race may vary in the arrest rate to improve police accountability and transparency. Using data from the Open Policing Project by Standford University, we attempt to see what the difference in arrest rate between Black and White drivers are while adjusting for other covariates.</p>
-<p>This is my data generating mechanism :</p>
-<p><span class="math display">\[
-P(Y = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_n X_n)}}
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="stops_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We examine traffic stops across the United States and how race may vary in the arrest rate to improve police accountability and transparency. Using data from the Open Policing Project by Standford University, we attempt to see what the difference in arrest rate between Black and White drivers are while adjusting for other covariates. A potential weakness in our model is that the dataset removed almost 3.1 million entries from the real data, reducing it to only about 400,000 entries, this deletion of the entries may lead to a misrepresentation of the population, as the possibility exists that the remaining/current data is only from select areas with selected and specific conditions present, and could be from biased officers who are more likely to arrest drivers compared to other officers in the zone. We model the probability of being arrested during a traffic stop (arrested vs.&nbsp;not arrested) as a logistic function of driver sex, race, and the zone of the stop, including interactions between race and zone. The predicted probability of arrest for Black male drivers is about 0.33 (95% CI: 0.32–0.34), which is nearly 6 percentage points higher than that for White male drivers in similar zones.</p>
+<p>This is my data generating mechanism : <span class="math display">\[
+\widehat{\text{arrested}} = 0.177
++ 0.0614 \cdot \text{sex}_{\text{Male}}
+- 0.0445 \cdot \text{race}_{\text{White}}
++ 0.0146 \cdot \text{zone}_{\text{B}}
++ 0.00610 \cdot \text{zone}_{\text{C}}
++ 0.0781 \cdot \text{zone}_{\text{D}}
++ 0.00190 \cdot \text{zone}_{\text{E}}
+- 0.00271 \cdot \text{zone}_{\text{F}}
++ 0.0309 \cdot \text{zone}_{\text{G}}
++ 0.0757 \cdot \text{zone}_{\text{H}}
++ \text{(interaction terms for race and zone)}
 \]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="spglcysjri" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#spglcysjri table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#spglcysjri thead, #spglcysjri tbody, #spglcysjri tfoot, #spglcysjri tr, #spglcysjri td, #spglcysjri th {
+  border-style: none;
+}
+
+#spglcysjri p {
+  margin: 0;
+  padding: 0;
+}
+
+#spglcysjri .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#spglcysjri .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#spglcysjri .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#spglcysjri .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#spglcysjri .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#spglcysjri .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#spglcysjri .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#spglcysjri .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#spglcysjri .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#spglcysjri .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#spglcysjri .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#spglcysjri .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#spglcysjri .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#spglcysjri .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#spglcysjri .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#spglcysjri .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#spglcysjri .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#spglcysjri .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#spglcysjri .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#spglcysjri .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#spglcysjri .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#spglcysjri .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#spglcysjri .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#spglcysjri .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#spglcysjri .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#spglcysjri .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#spglcysjri .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#spglcysjri .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#spglcysjri .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#spglcysjri .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#spglcysjri .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#spglcysjri .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#spglcysjri .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#spglcysjri .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#spglcysjri .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#spglcysjri .gt_left {
+  text-align: left;
+}
+
+#spglcysjri .gt_center {
+  text-align: center;
+}
+
+#spglcysjri .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#spglcysjri .gt_font_normal {
+  font-weight: normal;
+}
+
+#spglcysjri .gt_font_bold {
+  font-weight: bold;
+}
+
+#spglcysjri .gt_font_italic {
+  font-style: italic;
+}
+
+#spglcysjri .gt_super {
+  font-size: 65%;
+}
+
+#spglcysjri .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#spglcysjri .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#spglcysjri .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#spglcysjri .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#spglcysjri .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#spglcysjri .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#spglcysjri .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#spglcysjri .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#spglcysjri div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="4" class="gt_heading gt_title gt_font_normal">Model Estimates with Confidence Intervals</th>
+</tr>
+<tr class="gt_heading even">
+<th colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Logistic regression on arrest probability</th>
+</tr>
+<tr class="gt_col_headings header">
+<th id="term" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Variable</th>
+<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Estimate</th>
+<th id="conf.low" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Lower CI</th>
+<th id="conf.high" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Upper CI</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">(Intercept)</td>
+<td class="gt_row gt_right" headers="estimate">−1.529</td>
+<td class="gt_row gt_right" headers="conf.low">−1.565</td>
+<td class="gt_row gt_right" headers="conf.high">−1.494</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">sexMale</td>
+<td class="gt_row gt_right" headers="estimate">0.365</td>
+<td class="gt_row gt_right" headers="conf.low">0.346</td>
+<td class="gt_row gt_right" headers="conf.high">0.385</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite</td>
+<td class="gt_row gt_right" headers="estimate">−0.263</td>
+<td class="gt_row gt_right" headers="conf.low">−0.298</td>
+<td class="gt_row gt_right" headers="conf.high">−0.228</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneB</td>
+<td class="gt_row gt_right" headers="estimate">0.072</td>
+<td class="gt_row gt_right" headers="conf.low">0.024</td>
+<td class="gt_row gt_right" headers="conf.high">0.120</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneC</td>
+<td class="gt_row gt_right" headers="estimate">0.049</td>
+<td class="gt_row gt_right" headers="conf.low">0.008</td>
+<td class="gt_row gt_right" headers="conf.high">0.091</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneD</td>
+<td class="gt_row gt_right" headers="estimate">0.490</td>
+<td class="gt_row gt_right" headers="conf.low">0.451</td>
+<td class="gt_row gt_right" headers="conf.high">0.528</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneE</td>
+<td class="gt_row gt_right" headers="estimate">0.029</td>
+<td class="gt_row gt_right" headers="conf.low">−0.015</td>
+<td class="gt_row gt_right" headers="conf.high">0.073</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneF</td>
+<td class="gt_row gt_right" headers="estimate">−0.046</td>
+<td class="gt_row gt_right" headers="conf.low">−0.092</td>
+<td class="gt_row gt_right" headers="conf.high">0.001</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneG</td>
+<td class="gt_row gt_right" headers="estimate">0.196</td>
+<td class="gt_row gt_right" headers="conf.low">0.150</td>
+<td class="gt_row gt_right" headers="conf.high">0.243</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneH</td>
+<td class="gt_row gt_right" headers="estimate">0.423</td>
+<td class="gt_row gt_right" headers="conf.low">0.378</td>
+<td class="gt_row gt_right" headers="conf.high">0.468</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneI</td>
+<td class="gt_row gt_right" headers="estimate">0.149</td>
+<td class="gt_row gt_right" headers="conf.low">0.107</td>
+<td class="gt_row gt_right" headers="conf.high">0.192</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneJ</td>
+<td class="gt_row gt_right" headers="estimate">0.112</td>
+<td class="gt_row gt_right" headers="conf.low">0.064</td>
+<td class="gt_row gt_right" headers="conf.high">0.159</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneK</td>
+<td class="gt_row gt_right" headers="estimate">0.290</td>
+<td class="gt_row gt_right" headers="conf.low">0.244</td>
+<td class="gt_row gt_right" headers="conf.high">0.336</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneL</td>
+<td class="gt_row gt_right" headers="estimate">−0.038</td>
+<td class="gt_row gt_right" headers="conf.low">−0.090</td>
+<td class="gt_row gt_right" headers="conf.high">0.014</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneM</td>
+<td class="gt_row gt_right" headers="estimate">0.170</td>
+<td class="gt_row gt_right" headers="conf.low">0.115</td>
+<td class="gt_row gt_right" headers="conf.high">0.224</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneN</td>
+<td class="gt_row gt_right" headers="estimate">−0.044</td>
+<td class="gt_row gt_right" headers="conf.low">−0.122</td>
+<td class="gt_row gt_right" headers="conf.high">0.033</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneO</td>
+<td class="gt_row gt_right" headers="estimate">0.121</td>
+<td class="gt_row gt_right" headers="conf.low">0.055</td>
+<td class="gt_row gt_right" headers="conf.high">0.188</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneP</td>
+<td class="gt_row gt_right" headers="estimate">0.095</td>
+<td class="gt_row gt_right" headers="conf.low">0.019</td>
+<td class="gt_row gt_right" headers="conf.high">0.170</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneQ</td>
+<td class="gt_row gt_right" headers="estimate">0.023</td>
+<td class="gt_row gt_right" headers="conf.low">−0.032</td>
+<td class="gt_row gt_right" headers="conf.high">0.077</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneR</td>
+<td class="gt_row gt_right" headers="estimate">0.046</td>
+<td class="gt_row gt_right" headers="conf.low">−0.020</td>
+<td class="gt_row gt_right" headers="conf.high">0.111</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneS</td>
+<td class="gt_row gt_right" headers="estimate">0.311</td>
+<td class="gt_row gt_right" headers="conf.low">0.239</td>
+<td class="gt_row gt_right" headers="conf.high">0.383</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneT</td>
+<td class="gt_row gt_right" headers="estimate">0.037</td>
+<td class="gt_row gt_right" headers="conf.low">−0.019</td>
+<td class="gt_row gt_right" headers="conf.high">0.094</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneU</td>
+<td class="gt_row gt_right" headers="estimate">0.073</td>
+<td class="gt_row gt_right" headers="conf.low">0.021</td>
+<td class="gt_row gt_right" headers="conf.high">0.125</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneV</td>
+<td class="gt_row gt_right" headers="estimate">0.384</td>
+<td class="gt_row gt_right" headers="conf.low">0.302</td>
+<td class="gt_row gt_right" headers="conf.high">0.466</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneW</td>
+<td class="gt_row gt_right" headers="estimate">0.537</td>
+<td class="gt_row gt_right" headers="conf.low">0.372</td>
+<td class="gt_row gt_right" headers="conf.high">0.699</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneX</td>
+<td class="gt_row gt_right" headers="estimate">0.115</td>
+<td class="gt_row gt_right" headers="conf.low">0.045</td>
+<td class="gt_row gt_right" headers="conf.high">0.185</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneY</td>
+<td class="gt_row gt_right" headers="estimate">0.220</td>
+<td class="gt_row gt_right" headers="conf.low">0.138</td>
+<td class="gt_row gt_right" headers="conf.high">0.302</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">sexMale:raceWhite</td>
+<td class="gt_row gt_right" headers="estimate">−0.018</td>
+<td class="gt_row gt_right" headers="conf.low">−0.058</td>
+<td class="gt_row gt_right" headers="conf.high">0.022</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 
 </main>
 <!-- /main column -->

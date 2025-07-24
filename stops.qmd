@@ -15,16 +15,102 @@ library(tidyverse)
 library(primer.data) 
 library(tidymodels)
 library(broom)
+library(easystats)
+library(dplyr)
+library(broom)
+library(gt)       # for pretty tables
+library(marginaleffects) 
+
 ```
 
-We examine traffic stops across the United States and how race may vary in the arrest rate to improve police accountability and transparency. Using data from the Open Policing Project by Standford University, we attempt to see what the difference in arrest rate between Black and White drivers are while adjusting for other covariates. A potential weakness in our model is that the dataset removed almost 3.1 million entries from the real data, reducing it to only about 400,000 entries, this deletion of the entries may lead to a misrepresentation of the population, as the possibility exists that the remaining/current data is only from select areas with selected and specific conditions present, and could be from biased officers who are more likely to arrest drivers compared to other officers in the zone. 
+
+```{r}
+#| cache: true
+
+
+x <- stops |>
+  filter(race %in% c("black", "white")) |>
+  mutate(
+    race = str_to_title(race),
+    sex = str_to_title(sex),
+    arrested = factor(arrested, levels = c(0, 1))  # Convert to factor
+  )
+
+
+fit_stops <- 
+  logistic_reg() |>
+  fit(arrested ~ sex + race + zone + sex:race, data = x)
+
+
+```
+
+
+```{r}
+plot_predictions(fit_stops$fit, condition = c("sex", "race")) +
+  labs(
+    title = "Predicted Arrest Probabilities by Sex and Race",
+    subtitle = "Black drivers show consistently higher arrest probabilities than White drivers across sexes",
+    caption = "Source: Open Policing Project, Stanford University",
+    x = "Driver Sex",
+    y = "Predicted Probability of Arrest"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(margin = margin(b = 10)),
+    axis.title = element_text(face = "bold"),
+    legend.title = element_blank()
+  )
+
+```
+
+
+
+We examine traffic stops across the United States and how race may vary in the arrest rate to improve police accountability and transparency. Using data from the Open Policing Project by Standford University, we attempt to see what the difference in arrest rate between Black and White drivers are while adjusting for other covariates. A potential weakness in our model is that the dataset removed almost 3.1 million entries from the real data, reducing it to only about 400,000 entries, this deletion of the entries may lead to a misrepresentation of the population, as the possibility exists that the remaining/current data is only from select areas with selected and specific conditions present, and could be from biased officers who are more likely to arrest drivers compared to other officers in the zone. We model the probability of being arrested during a traffic stop (arrested vs. not arrested) as a logistic function of driver sex, race, and the zone of the stop, including interactions between race and zone. The predicted probability of arrest for Black male drivers is about 0.33 (95% CI: 0.32–0.34), which is nearly 6 percentage points higher than that for White male drivers in similar zones.
 
 
 This is my data generating mechanism : 
+$$
+\widehat{\text{arrested}} = 0.177 
++ 0.0614 \cdot \text{sex}_{\text{Male}} 
+- 0.0445 \cdot \text{race}_{\text{White}} 
++ 0.0146 \cdot \text{zone}_{\text{B}} 
++ 0.00610 \cdot \text{zone}_{\text{C}} 
++ 0.0781 \cdot \text{zone}_{\text{D}} 
++ 0.00190 \cdot \text{zone}_{\text{E}} 
+- 0.00271 \cdot \text{zone}_{\text{F}} 
++ 0.0309 \cdot \text{zone}_{\text{G}} 
++ 0.0757 \cdot \text{zone}_{\text{H}} 
++ \text{(interaction terms for race and zone)}
+$$
 
-$$
-P(Y = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_n X_n)}}
-$$
+
+```{r}
+# Get tidy results with confidence intervals
+tidy_table <- tidy(fit_stops$fit, conf.int = TRUE) |>
+  select(term, estimate, conf.low, conf.high)
+
+# Make a nice-looking table with gt
+tidy_table %>%
+  gt() %>%
+  tab_header(
+    title = "Model Estimates with Confidence Intervals",
+    subtitle = "Logistic regression on arrest probability"
+  ) %>%
+  fmt_number(
+    columns = c(estimate, conf.low, conf.high),
+    decimals = 3
+  ) %>%
+  cols_label(
+    term = "Variable",
+    estimate = "Estimate",
+    conf.low = "Lower CI",
+    conf.high = "Upper CI"
+  )
+
+```
+
+
 
 
 
